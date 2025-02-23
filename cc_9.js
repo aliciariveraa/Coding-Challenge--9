@@ -50,8 +50,8 @@ class Manager extends Employee {
 
 
 
-  // Task 3 - Company Class
-  
+// Task 3 - Company Class
+
 class Company {
     constructor(name) {
       this.name = name;
@@ -77,3 +77,40 @@ class Company {
   // Expected output:
   // "Employee: Alice Johnson, ID: 101, Department: Sales, Salary: $5000"
   // "Manager: John Smith, ID: 201, Department: IT, Salary: $8000, Team Size: 5"
+
+
+
+// Task 4 - Implemented Payroll System
+class Company {
+    constructor(name) {
+      this.name = name;
+      this.employees = [];
+    }
+  
+    addEmployee(employee) {
+      this.employees.push(employee);
+    }
+  
+    listEmployees() {
+      this.employees.forEach(employee => {
+        console.log(employee.getDetails());
+      });
+    }
+  
+    calculateTotalPayroll() {
+      return this.employees.reduce((total, employee) => {
+        if (employee instanceof Manager) {
+          return total + employee.calculateAnnualSalary() + employee.calculateBonus(); // Include bonus for managers
+        } else {
+          return total + employee.calculateAnnualSalary(); // Only salary for regular employees
+        }
+      }, 0);
+    }
+  }
+  
+  // Test the payroll calculation
+  console.log(company.calculateTotalPayroll()); // Expected output: 165600 (emp1 + mgr1's salaries + bonus)
+
+  
+
+

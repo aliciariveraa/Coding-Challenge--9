@@ -81,6 +81,7 @@ class Company {
 
 
 // Task 4 - Implemented Payroll System
+
 class Company {
     constructor(name) {
       this.name = name;
@@ -109,8 +110,47 @@ class Company {
   }
   
   // Test the payroll calculation
-  console.log(company.calculateTotalPayroll()); // Expected output: 165600 (emp1 + mgr1's salaries + bonus)
+  console.log(company.calculateTotalPayroll()); // Expected output: 165600 (assuming emp1 and mgr1 salaries)
 
   
 
+// Task 5 - Implemented Promotion System
 
+class Company {
+    constructor(name) {
+      this.name = name;
+      this.employees = [];
+    }
+  
+    addEmployee(employee) {
+      this.employees.push(employee);
+    }
+  
+    listEmployees() {
+      this.employees.forEach(employee => {
+        console.log(employee.getDetails());
+      });
+    }
+  
+    calculateTotalPayroll() {
+      return this.employees.reduce((total, employee) => {
+        if (employee instanceof Manager) {
+          return total + employee.calculateAnnualSalary() + employee.calculateBonus();
+        } else {
+          return total + employee.calculateAnnualSalary();
+        }
+      }, 0);
+    }
+  
+    promoteToManager(employee, teamSize) {
+      const promotedManager = new Manager(employee.name, employee.id, employee.department, employee.salary, teamSize);
+      this.employees = this.employees.filter(emp => emp.id !== employee.id); // Remove the original employee
+      this.addEmployee(promotedManager); // Add the new manager
+    }
+  }
+  
+  // Test promotion
+  company.promoteToManager(emp1, 3);
+  company.listEmployees();
+  // "Manager: Alice Johnson, ID: 101, Department: Sales, Salary: $5000, Team Size: 3"
+  
